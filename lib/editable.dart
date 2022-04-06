@@ -310,6 +310,7 @@ class EditableState extends State<Editable> {
 
   ///Create a row after the last row
   createRow() => addOneRow(columns, rows);
+  removeRow(idx) => removeOneRow(columns, rows, idx);
   EditableState({this.rows, this.columns, this.columnCount, this.rowCount});
 
   /// Temporarily holds all edited rows
