@@ -441,6 +441,7 @@ class EditableState extends State<Editable> {
                     stripeColor1: widget.stripeColor1,
                     stripeColor2: widget.stripeColor2,
                     onChanged: (value) {
+                      rows![index][ckeys[rowIndex]] = value;
                       ///checks if row has been edited previously
                       var result = editedRows.indexWhere((element) {
                         return element['row'] != index ? false : true;

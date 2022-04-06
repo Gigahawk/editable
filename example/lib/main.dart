@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -72,14 +72,19 @@ class _MyHomePageState extends State<MyHomePage> {
   /// Access the current state of Editable
   void _addNewRow() {
     setState(() {
-      _editableKey.currentState.createRow();
+      _editableKey.currentState?.createRow();
     });
   }
 
   ///Print only edited rows.
   void _printEditedRows() {
-    List editedRows = _editableKey.currentState.editedRows;
+    List? editedRows = _editableKey.currentState?.editedRows;
     print(editedRows);
+  }
+
+  void _printRows() {
+    List? rows = _editableKey.currentState?.rows;
+    print(rows);
   }
 
   @override
@@ -102,6 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () => _printEditedRows(),
                 child: Text('Print Edited Rows',
                     style: TextStyle(fontWeight: FontWeight.bold))),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+                onPressed: () => _printRows(),
+                child: Text('Print Rows',
+                    style: TextStyle(fontWeight: FontWeight.bold))),
           )
         ],
       ),
@@ -110,8 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
         columns: cols,
         rows: rows,
         zebraStripe: true,
-        stripeColor1: Colors.blue[50],
-        stripeColor2: Colors.grey[200],
+        stripeColor1: Colors.blue,
+        stripeColor2: Colors.grey,
         onRowSaved: (value) {
           print(value);
         },
