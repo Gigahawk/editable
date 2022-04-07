@@ -33,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   /// Create a Key for EditableState
   final _editableKey = GlobalKey<EditableState>();
+  bool whichRows = true;
 
   List rows = [
     {
@@ -60,6 +61,20 @@ class _MyHomePageState extends State<MyHomePage> {
       "month": 'December',
     },
   ];
+  List rows2 = [
+    {
+      "name": 'asdflkjlajsf',
+      "date": '23/09/2020',
+      "month": 'June',
+      "status": 'completed'
+    },
+    {
+      "name": 'asdflkjlk',
+      "month": 'March',
+      "status": 'new',
+      "date": '12/4/2020',
+    },
+  ];
   List cols = [
     {"title": 'Name', 'widthFactor': 0.2, 'key': 'name', 'editable': false},
     {"title": 'Date', 'widthFactor': 0.2, 'key': 'date'},
@@ -78,8 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ///Print only edited rows.
   void _printEditedRows() {
-    List? editedRows = _editableKey.currentState?.editedRows;
-    print(editedRows);
+    print(rows);
   }
 
   void _printRows() {
@@ -104,15 +118,37 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
-                onPressed: () => _printEditedRows(),
-                child: Text('Print Edited Rows',
+                onPressed: () {
+                  if(whichRows) {
+                    setState(() {
+                      _editableKey.currentState?.rows = rows2;
+                    });
+                  } else {
+                    setState(() {
+                      _editableKey.currentState?.rows = rows;
+                    });
+                  }
+                  whichRows = !whichRows;
+                },
+                child: Text('swap1',
                     style: TextStyle(fontWeight: FontWeight.bold))),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-                onPressed: () => _printRows(),
-                child: Text('Print Rows',
+                onPressed: () {
+                  if(whichRows) {
+                    setState(() {
+                      _editableKey.currentState?.rows = rows2;
+                    });
+                  } else {
+                    setState(() {
+                      _editableKey.currentState?.rows = rows;
+                    });
+                  }
+                  whichRows = !whichRows;
+                },
+                child: Text('swap2',
                     style: TextStyle(fontWeight: FontWeight.bold))),
           )
         ],
@@ -120,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Editable(
         key: _editableKey,
         columns: cols,
-        rows: rows,
+        rows: whichRows? rows : rows2,
         zebraStripe: true,
         stripeColor1: Colors.blue,
         stripeColor2: Colors.grey,

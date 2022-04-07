@@ -305,16 +305,10 @@ class EditableState extends State<Editable> {
   int? columnCount;
   int? rowCount;
 
-  ///Get all edited rows
-  List get editedRows => _editedRows;
-
   ///Create a row after the last row
   createRow() => addOneRow(columns, rows);
   removeRow(idx) => removeOneRow(columns, rows, idx);
   EditableState({this.rows, this.columns, this.columnCount, this.rowCount});
-
-  /// Temporarily holds all edited rows
-  List _editedRows = [];
 
   @override
   Widget build(BuildContext context) {
@@ -364,13 +358,6 @@ class EditableState extends State<Editable> {
                   size: widget.saveIconSize,
                 ),
                 onPressed: () {
-                  int rowIndex = editedRows.indexWhere(
-                      (element) => element['row'] == index ? true : false);
-                  if (rowIndex != -1) {
-                    widget.onRowSaved!(editedRows[rowIndex]);
-                  } else {
-                    widget.onRowSaved!('no edit');
-                  }
                 },
               ),
             ),
@@ -442,21 +429,6 @@ class EditableState extends State<Editable> {
                     stripeColor1: widget.stripeColor1,
                     stripeColor2: widget.stripeColor2,
                     onChanged: (value) {
-                      rows![index][ckeys[rowIndex]] = value;
-                      ///checks if row has been edited previously
-                      var result = editedRows.indexWhere((element) {
-                        return element['row'] != index ? false : true;
-                      });
-
-                      ///adds a new edited data to a temporary holder
-                      if (result != -1) {
-                        editedRows[result][ckeys[rowIndex]] = value;
-                      } else {
-                        var temp = {};
-                        temp['row'] = index;
-                        temp[ckeys[rowIndex]] = value;
-                        editedRows.add(temp);
-                      }
                     },
                   );
           }),
