@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 
 /// Generates empty columns using the specified columnCount,
 /// if no column count is provided, it uses the [columns.length] value
-columnBlueprint(columnCount, columns) {
-  var data = List.generate(
-      columnCount, (index) => {'title': '', 'index': index, 'key': index});
+List<Map<String,dynamic>> columnBlueprint(int columnCount, List<Map<String,dynamic>>? columns) {
+  List<Map<String,dynamic>> data = List.generate(
+      columnCount,
+          (index) => {'title': '', 'index': index, 'key': index});
   columns = [...data];
   return columns;
 }
 
 /// Generates empty rows from rowCount values provided
-rowBlueprint(int rowCount, columns, rows) {
-  List sampleRow = [];
+List<Map<String,String>> rowBlueprint(int rowCount, List<Map<String,dynamic>>? columns, List<Map<String,String>>? rows) {
+  List<Map<String,String>> sampleRow = [];
   for (var i = 0; i < rowCount; i++) {
-    var item = {};
-    columns.forEach((element) {
+    Map<String,String> item = {};
+    columns?.forEach((element) {
       item[element['key']] = '';
     });
     sampleRow.add(item);
@@ -24,22 +25,22 @@ rowBlueprint(int rowCount, columns, rows) {
 }
 
 /// adds a row to existing row lists
-addOneRow(columns, rows) {
-  var item = {};
-  columns.forEach((element) {
+List<Map<String,String>>? addOneRow(List<Map<String,dynamic>>? columns, List<Map<String,String>>? rows) {
+  Map<String,String> item = {};
+  columns?.forEach((element) {
     item[element['key']] = '';
   });
-  rows.add(item);
+  rows?.add(item);
   return rows;
 }
 
-removeOneRow(columns, rows, rowToDelete) {
-  rows.remove(rowToDelete);
+List<Map<String,String>>? removeOneRow(List<Map<String,dynamic>>? columns, List<Map<String,String>>? rows, int rowToDelete) {
+  rows?.remove(rowToDelete);
   return rows;
 }
 
 ///Create an empty column for saveIcon
-Widget iconColumn(showSaveIcon, thPaddingTop, thPaddingBottom) {
+Widget iconColumn(bool showSaveIcon, double thPaddingTop, double thPaddingBottom) {
   return Visibility(
     visible: showSaveIcon,
     child: Flexible(

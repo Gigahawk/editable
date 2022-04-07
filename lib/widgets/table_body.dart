@@ -35,7 +35,7 @@ class RowBuilder extends StatefulWidget {
   final double _trHeight;
   final Color _borderColor;
   final double _borderWidth;
-  final cellData;
+  final String cellData;
   final double? widthRatio;
   final bool isEditable;
   final TextAlign tdAlignment;
@@ -59,8 +59,10 @@ class RowBuilder extends StatefulWidget {
 }
 
 class _RowBuilderState extends State<RowBuilder> {
+  final TextEditingController tc = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    tc.text = widget.cellData;
     double width = MediaQuery.of(context).size.width;
     return Flexible(
       fit: FlexFit.loose,
@@ -78,9 +80,10 @@ class _RowBuilderState extends State<RowBuilder> {
                 color: widget._borderColor, width: widget._borderWidth)),
         child: widget.isEditable
             ? TextFormField(
+                controller: tc,
                 textAlign: widget.tdAlignment,
                 style: widget.tdStyle,
-                initialValue: widget.cellData.toString(),
+                //initialValue: widget.cellData.toString(),
                 onFieldSubmitted: widget.onSubmitted,
                 onChanged: widget.onChanged,
                 textAlignVertical: TextAlignVertical.center,

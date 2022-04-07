@@ -117,7 +117,7 @@ class Editable extends StatefulWidget {
   ///
   /// [key] an identifier preferably a short string
   /// [editable] a boolean, if the column should be editable or not, [true] by default.
-  final List? columns;
+  final List<Map<String,dynamic>>? columns;
 
   /// A data set to create rows
   ///
@@ -134,7 +134,7 @@ class Editable extends StatefulWidget {
   /// ```
   /// each objects DO NOT have to be positioned in same order as its column
 
-  final List? rows;
+  final List<Map<String,String>>? rows;
 
   /// Interger value of number of rows to be generated:
   ///
@@ -301,7 +301,8 @@ class Editable extends StatefulWidget {
 }
 
 class EditableState extends State<Editable> {
-  List? rows, columns;
+  List<Map<String, String>>? rows;
+  List<Map<String, dynamic>>? columns;
   int? columnCount;
   int? rowCount;
 
@@ -316,13 +317,13 @@ class EditableState extends State<Editable> {
     rowCount = rows == null || rows!.isEmpty ? widget.rowCount : rows!.length;
     columnCount =
         columns == null || columns!.isEmpty ? columnCount : columns!.length;
-    columns = columns ?? columnBlueprint(columnCount, columns);
+    columns = columns ?? columnBlueprint(columnCount ?? 0, columns);
     rows = rows ?? rowBlueprint(rowCount!, columns, rows);
 
     /// Builds save snd remove Icons widget
 
 
-    Widget _removeSaveIcons(index) {
+    Widget _removeSaveIcons(int index) {
       return Row(
         children: <Widget>[
           Container(
@@ -340,7 +341,7 @@ class EditableState extends State<Editable> {
                   rowCount = rowCount! - 1;
 
                   setState(() {
-                    rows = removeOneRow(columns, rows, rows![index]);
+                    rows = removeOneRow(columns, rows, index);
                   });
                 },
               ),
@@ -396,15 +397,15 @@ class EditableState extends State<Editable> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: List.generate(columnCount! + 1, (rowIndex) {
-            var ckeys = [];
-            var cwidths = [];
-            var ceditable = <bool>[];
+            List<String> ckeys = [];
+            List<double> cwidths = [];
+            List<bool> ceditable = [];
             columns!.forEach((e) {
               ckeys.add(e['key']);
               cwidths.add(e['widthFactor'] ?? widget.columnRatio);
               ceditable.add(e['editable'] ?? true);
             });
-            var list = rows![index];
+            Map<String,String> list = rows![index];
             return columnCount! + 1 == (rowIndex + 1)
                 ? _removeSaveIcons(index)
                 : RowBuilder(
@@ -413,7 +414,7 @@ class EditableState extends State<Editable> {
                     trHeight: widget.trHeight,
                     borderColor: widget.borderColor,
                     borderWidth: widget.borderWidth,
-                    cellData: list[ckeys[rowIndex]],
+                    cellData: list[ckeys[rowIndex]] ?? "",
                     tdPaddingLeft: widget.tdPaddingLeft,
                     tdPaddingTop: widget.tdPaddingTop,
                     tdPaddingBottom: widget.tdPaddingBottom,
@@ -428,8 +429,7 @@ class EditableState extends State<Editable> {
                     focusedBorder: widget.focusedBorder,
                     stripeColor1: widget.stripeColor1,
                     stripeColor2: widget.stripeColor2,
-                    onChanged: (value) {
-                    },
+                    onChanged: (value) {},
                   );
           }),
         );

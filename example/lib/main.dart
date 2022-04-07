@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _editableKey = GlobalKey<EditableState>();
   bool whichRows = true;
 
-  List rows = [
+  List<Map<String, String>> rows = [
     {
       "name": 'James LongName Joe',
       "date": '23/09/2020',
@@ -61,12 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
       "month": 'December',
     },
   ];
-  List rows2 = [
+  List<Map<String, String>> rows2 = [
     {
       "name": 'asdflkjlajsf',
-      "date": '23/09/2020',
-      "month": 'June',
-      "status": 'completed'
+      "date": '23/09/2020edit',
+      "month": 'Juneeddit',
+      "status": 'completededit'
     },
     {
       "name": 'asdflkjlk',
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       "date": '12/4/2020',
     },
   ];
-  List cols = [
+  List<Map<String, dynamic>> cols = [
     {"title": 'Name', 'widthFactor': 0.2, 'key': 'name', 'editable': false},
     {"title": 'Date', 'widthFactor': 0.2, 'key': 'date'},
     {"title": 'Month', 'widthFactor': 0.2, 'key': 'month'},
