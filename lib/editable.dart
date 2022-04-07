@@ -429,7 +429,9 @@ class EditableState extends State<Editable> {
                     focusedBorder: widget.focusedBorder,
                     stripeColor1: widget.stripeColor1,
                     stripeColor2: widget.stripeColor2,
-                    onChanged: (value) {},
+                    onChanged: (String value) {
+                      rows![index][ckeys[rowIndex]] = value;
+                    },
                   );
           }),
         );

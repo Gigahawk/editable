@@ -97,8 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _printRows() {
-    List? rows = _editableKey.currentState?.rows;
-    print(rows);
+    List<Map<String,String>>? rows = _editableKey.currentState?.rows;
+   rows?.forEach((row) { print(row); });
   }
 
   @override
@@ -115,9 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
             )),
         title: Text(widget.title),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
+            ElevatedButton(
                 onPressed: () {
                   if(whichRows) {
                     setState(() {
@@ -130,27 +128,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                   whichRows = !whichRows;
                 },
-                child: Text('swap1',
+                child: Text('swap',
                     style: TextStyle(fontWeight: FontWeight.bold))),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-                onPressed: () {
-                  if(whichRows) {
-                    setState(() {
-                      _editableKey.currentState?.rows = rows2;
-                    });
-                  } else {
-                    setState(() {
-                      _editableKey.currentState?.rows = rows;
-                    });
-                  }
-                  whichRows = !whichRows;
-                },
-                child: Text('swap2',
-                    style: TextStyle(fontWeight: FontWeight.bold))),
-          )
+          ElevatedButton(
+              onPressed: () {
+                _printRows();
+              },
+              child: Text('print',
+                  style: TextStyle(fontWeight: FontWeight.bold))),
         ],
       ),
       body: Editable(
