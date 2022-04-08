@@ -158,6 +158,8 @@ class _MyHomePageState extends State<MyHomePage> {
         thAlignment: TextAlign.center,
         thVertAlignment: CrossAxisAlignment.end,
         thPaddingBottom: 3,
+        showRemoveIcon: true,
+        removeIconColor: Colors.black,
         showSaveIcon: true,
         saveIconColor: Colors.black,
         showCreateButton: true,

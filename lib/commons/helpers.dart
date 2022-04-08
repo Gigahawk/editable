@@ -35,7 +35,7 @@ List<Map<String,String>>? addOneRow(List<Map<String,dynamic>>? columns, List<Map
 }
 
 List<Map<String,String>>? removeOneRow(List<Map<String,dynamic>>? columns, List<Map<String,String>>? rows, int rowToDelete) {
-  rows?.remove(rowToDelete);
+  rows?.removeAt(rowToDelete);
   return rows;
 }
 
